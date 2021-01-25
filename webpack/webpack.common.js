@@ -1,4 +1,4 @@
-const webbpack = require('webpack');
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const srcDir = "../src/";
 let glob = require("glob");
@@ -32,5 +32,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
-  }
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [{ from: path.join(__dirname, srcDir + "manifest.json"), to: "../"}],
+      options: {},
+    })
+  ]
 };

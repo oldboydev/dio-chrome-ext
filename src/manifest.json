@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "DIO - Hide lessons tracker",
+  "version": "1.0.0",
+  "description": "DIO - Minimiza o painel de aulas / partes para aumentar o tamanho do player.",
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.digitalinnovation.one/course/**", 
+        "https://web.digitalinnovation.one/lab/**", 
+        "https://web.digitalinnovation.one/project/**"
+      ],
+      "js": ["js/content.js"]
+    }
+  ]
+}
