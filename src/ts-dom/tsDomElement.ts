@@ -1,16 +1,8 @@
 export class TSDomElement{
   private readonly _element: Element | null;
 
-  constructor(selector: string){
-    this._element = this.getDomElement(selector);
-
-    if(this._element === null){
-      throw new Error(`Element with selector: ${selector} not found`)
-    }
-  }
-
-  private getDomElement(selector: string): Element | null{
-    return document.querySelector(selector);
+  constructor(element: Element){
+    this._element = element;
   }
 
   public addClass(classesToAdd: string[]): void{
@@ -21,7 +13,7 @@ export class TSDomElement{
     this._element.classList.remove(...classesToRemove);
   }
 
-  get Element(): Element | null{
+  get element(): Element | null{
     return this._element;
   }
 }
