@@ -1,6 +1,7 @@
-const CopyPlugin = require("copy-webpack-plugin");
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 const path = require("path");
 const srcDir = "../src/";
+const distDir = "../dist/";
 let glob = require("glob");
 
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
         }, {}),
 
   output: {
-    path: path.join(__dirname, "../dist/js"),
+    path: path.join(__dirname, distDir + "js"),
     filename: "[name].js",
   },
   optimization: {
@@ -34,9 +35,14 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [{ from: path.join(__dirname, srcDir + "manifest.json"), to: "../"}],
-      options: {},
+    new FileManagerPlugin({
+      events: {
+        onEnd: {
+          copy: [{ source: path.join(__dirname, srcDir + "manifest.json"), destination: path.join(__dirname, distDir + "manifest.json")}],
+          delete: [path.join(__dirname, distDir +  "background.js")],
+          move: [{ source: path.join(__dirname, distDir + "js/background.js"), destination: path.join(__dirname, distDir +  "background.js")}]
+        }
+      }
     })
   ]
 };
