@@ -7,9 +7,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://web.digitalinnovation.one/course/**", 
-        "https://web.digitalinnovation.one/lab/**", 
-        "https://web.digitalinnovation.one/project/**"
+        "https://web.digitalinnovation.one/**"
       ],
       "js": ["js/content.js"]
     }
@@ -18,6 +16,7 @@
     "service_worker": "background.js"
   },
   "permissions": [
-    "webNavigation"
+    "webNavigation",
+    "tabs"
   ]
 }

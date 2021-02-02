@@ -1,16 +1,30 @@
 import { TSDom } from "./ts-dom/tsDom";
 import { TSDomElement } from "./ts-dom/tsDomElement";
+import { TSDomWait } from "./ts-dom/tsDomWait";
+import config, { Config } from "./config";
 
-function bootstrap(): void{
+chrome.runtime.onMessage.addListener(async (message: any, sender: any, sendResponse: any) => {
+  await bootstrap(config);
+});
+
+async function bootstrap(config: Config): Promise<void>{
   console.log("init content script");
 
   const tsDom = new TSDom();
+  const tsDomWait = new TSDomWait(tsDom);
 
   try {
     //get elements 
-    const trackLessons = tsDom.getElement(".track-lessons");
+    const trackLessons = await tsDomWait.until(".track-lessons");
     const lessonContent = tsDom.getElement(".lesson-content");
-    const titleHeader = tsDom.getElement(".lesson-video.card .card-header .title");
+    
+    let titleHeader: TSDomElement;
+    try {
+      titleHeader = await tsDomWait.until(".lesson-video.card .card-header .title");
+    } catch (error) {
+      titleHeader = await tsDomWait.until(".lesson-video.card .card-header .title-video");
+    }
+    
     const titleWraper = tsDom.getElement(".lesson-video.card .card-header .row");
 
     trackLessons.addClass(["d-none"]);
@@ -33,4 +47,6 @@ function bootstrap(): void{
   }
 }
 
-bootstrap();
+(async () => {
+  await bootstrap(config);
+})();

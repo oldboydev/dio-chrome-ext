@@ -1,14 +1,13 @@
 import { TSDomElement } from "./tsDomElement";
 
 export class TSDom{
-
-  createElement(elementType: string): TSDomElement{
+  public createElement(elementType: string): TSDomElement{
     const element = document.createElement(elementType);
 
     return new TSDomElement(element);
   }
 
-  getElement(selector: string): TSDomElement{
+  public getElement(selector: string): TSDomElement{
     const domElement = document.querySelector(selector);
 
     if(domElement === null){
@@ -18,7 +17,7 @@ export class TSDom{
     return new TSDomElement(domElement);
   }
 
-  getElements(selector: string): TSDomElement[]{
+  public getElements(selector: string): TSDomElement[]{
     const domElements = document.querySelectorAll(selector);
 
     if(domElements.length === 0){
@@ -32,5 +31,5 @@ export class TSDom{
     });
 
     return elements;
-  }
+  }  
 }
