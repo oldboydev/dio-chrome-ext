@@ -38,7 +38,10 @@ module.exports = {
     new FileManagerPlugin({
       events: {
         onEnd: {
-          copy: [{ source: path.join(__dirname, srcDir + "manifest.json"), destination: path.join(__dirname, distDir + "manifest.json")}],
+          copy: [
+            { source: path.join(__dirname, srcDir + "manifest.json"), destination: path.join(__dirname, distDir + "manifest.json")},
+            { source: path.join(__dirname, srcDir + "imgs"), destination: path.join(__dirname, distDir + "imgs")}
+          ],
           delete: [path.join(__dirname, distDir +  "background.js")],
           move: [{ source: path.join(__dirname, distDir + "js/background.js"), destination: path.join(__dirname, distDir +  "background.js")}]
         }
