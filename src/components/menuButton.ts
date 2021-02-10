@@ -46,7 +46,7 @@ export class MenuButton{
 
   private createButton(): TSDomElement{
     const buttonWrap = this.TSDOM.createElement("div");
-    buttonWrap.addClass(["col-md-1"]);
+    buttonWrap.addClass(["col-md-1", "hide-lessons-btn"]);
     //buttonWrap.element.setAttribute("href", "#");
 
     const button = this.TSDOM.createElement("i");
@@ -57,20 +57,31 @@ export class MenuButton{
     return buttonWrap;
   }
 
-  public async show(lessonsTrack: LessonsTrack): Promise<void>{
-    await this.hideTitleHeader();
-    
-    const button = this.createButton();
-    button.element.addEventListener("click", (event) => {
-      if(this.isHide){
-        lessonsTrack.show();
-        this.isHide = false;
-      }else{
-        lessonsTrack.hide();
-        this.isHide = true;
-      }      
-    });
+  private existButton(): boolean{
+    try {
+      const button = this.TSDOM.getElement(".hide-lessons-btn");
+      return true;
+    } catch (error) {
+      return false;
+    }  
+  }
 
-    this.titleWraper.element.appendChild(button.element);
+  public async show(lessonsTrack: LessonsTrack): Promise<void>{
+    if(!this.existButton()){
+      await this.hideTitleHeader();
+    
+      const button = this.createButton();
+      button.element.addEventListener("click", (event) => {
+        if(this.isHide){
+          lessonsTrack.show();
+          this.isHide = false;
+        }else{
+          lessonsTrack.hide();
+          this.isHide = true;
+        }      
+      });
+
+      this.titleWraper.element.appendChild(button.element);
+    }    
   }      
 }
